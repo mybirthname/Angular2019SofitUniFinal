@@ -2,14 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ShopCartComponent } from './components/shop-cart/shop-cart.component';
 import { CartRoutingModule } from './cart-routing.module';
+import { SharedModule } from '../shared/shared.module';
+import { EntityComponent } from './components/entity/entity.component';
 
 
 @NgModule({
-  declarations: [ShopCartComponent],
+  declarations: [ShopCartComponent, EntityComponent],
   imports: [
     CommonModule,
-    CartRoutingModule
+    CartRoutingModule,
+    SharedModule
   ],
-  exports:[ShopCartComponent]
+  exports:[]
 })
 export class CartModule { }

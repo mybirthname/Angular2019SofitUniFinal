@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
-
 const routes: Routes = [
   {
     path:'',
@@ -15,6 +14,14 @@ const routes: Routes = [
   {
     path:'cart',
     loadChildren: './cart/cart.module#CartModule'
+  },
+  {
+    path:'order',
+    loadChildren:'./order/order.module#OrderModule'
+  },
+  {
+    path:'user',
+    loadChildren: './user/user.module#UserModule'
   }
 
 ];
