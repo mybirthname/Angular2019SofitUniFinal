@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://baas.kinvey.com',
+  appKey: 'kid_BynF5IwYN',
+  appSecret: 'c71430a924e94d64bde3f3111e47ab0a'
 };
 
 /*

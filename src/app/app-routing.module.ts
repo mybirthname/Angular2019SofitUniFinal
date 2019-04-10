@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { CustomPreloader } from './core/services/custom-preloader';
 
 const routes: Routes = [
   {
@@ -9,11 +10,13 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomeModule'
+    loadChildren: './home/home.module#HomeModule',
+    data: { preload: true }
   },
   {
     path:'cart',
-    loadChildren: './cart/cart.module#CartModule'
+    loadChildren: './cart/cart.module#CartModule',
+    data: { preload: true }
   },
   {
     path:'order',
@@ -28,7 +31,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    preloadingStrategy: PreloadAllModules
+    preloadingStrategy: CustomPreloader
   })],
   exports: [RouterModule]
 })

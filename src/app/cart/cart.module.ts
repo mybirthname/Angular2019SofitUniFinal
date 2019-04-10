@@ -15,4 +15,6 @@ import { EntityComponent } from './components/entity/entity.component';
   ],
   exports:[]
 })
-export class CartModule { }
+export class CartModule { 
+
+}
