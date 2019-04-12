@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   credentials: ILoginCredentials
   form:FormGroup;
   sb:Subscription;
+  loading:boolean;
   
   constructor(private userService:UserService, 
               private fb:FormBuilder,
@@ -32,11 +33,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(){
-    this.sb = this.userService.logIn(this.form.value).subscribe();
-    this.router.navigate(['/home']);
+    this.loading = true;
+    this.sb = this.userService.logIn(this.form.value).subscribe((data)=>{
+      this.loading = false;
+      this.router.navigate(['/home']);
+    });
   }
 
   ngOnDestroy(): void {
-    this.sb.unsubscribe();
+    if(this.sb!=null)
+      this.sb.unsubscribe();
   }
 }

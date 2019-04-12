@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
+import * as MagicStrings from 'src/app/shared/magic-strings';
 
 @Component({
   selector: 'app-mobile-header',
@@ -7,12 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MobileHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService:UserService, private router:Router) { }
 
   ngOnInit() {
   }
 
-  LogOut(){
-    
+  logOut(){
+    this.userService.logOut()
+    this.router.navigateByUrl('/home');    
+
+  }
+
+  isAuthenticated(){
+    return localStorage.getItem(MagicStrings.Token) != null;
+  }
+  
+  isSuperAdmin(){
+    return localStorage.getItem(MagicStrings.IsSuperAdmin) == "1";
   }
 }

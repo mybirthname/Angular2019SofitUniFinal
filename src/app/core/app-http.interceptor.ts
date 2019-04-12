@@ -1,4 +1,4 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticationHeaderFactory } from './authentication-header.factory';
@@ -11,7 +11,7 @@ export class AppHttpInterceptor implements HttpInterceptor{
             throw new Error('AuthenticationType param is required to indicate what kind of authentication you need')
         }
 
-        let headers = new AuthenticationHeaderFactory().Create(req.params.get('AuthenticationType'));
+        const headers = new AuthenticationHeaderFactory().Create(req.params.get('AuthenticationType'));
 
         let cloneRequest = req.clone({
             url: `${apiUrl}/${req.url}`,

@@ -1,4 +1,8 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import * as MagicStrings from 'src/app/shared/magic-strings';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +12,10 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
+
+ 
   
-  constructor() { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -18,7 +24,18 @@ export class HeaderComponent implements OnInit {
     this.sidenavToggle.emit();
   }
 
-  LogOut(){
+  isAuthenticated(){
+    return localStorage.getItem(MagicStrings.Token) != null;
+  }
+
+  isSuperAdmin(){
+    return localStorage.getItem(MagicStrings.IsSuperAdmin) == "1";
+  }
+
+  logOut(){
+    this.userService.logOut()
+    this.router.navigateByUrl('/home');    
 
   }
+
 }

@@ -23,32 +23,33 @@
                   <span class="label">Shop Cart</span>
               </a>
            </li>
-           <li>
-              <a routerLink="/order">
+           <li *ngIf="isSuperAdmin()">
+              <a routerLink="/order" >
                   <mat-icon class="icon">local_grocery_store</mat-icon>
                   <span class="label">Order</span>
               </a>
            </li>
-           <li>
+           <li *ngIf="isSuperAdmin()">
               <a routerLink="/user">
                   <mat-icon class="icon">accessibility_new</mat-icon>
                   <span class="label">User</span>
               </a>
            </li>
-           <li>
+           <li *ngIf="!isAuthenticated()">
               <a routerLink="/user/register">
                   <mat-icon class="icon">add_circle_outline</mat-icon>
                   <span class="label">Register</span>
               </a>
            </li>
-            <li>
+            <li *ngIf="!isAuthenticated()">
+
               <a routerLink="/user/login">
                   <mat-icon class="icon">input</mat-icon>
                   <span  class="label">Login</span>
               </a>
            </li>
-           <li>
-               <a [routerLink]="[]" (click)="LogOut()" >
+           <li *ngIf="isAuthenticated()">
+               <a [routerLink]="[]" (click)="logOut()" >
                  <mat-icon class="icon">backspace</mat-icon>
                  <span class="label">Log Out</span>
                 </a>
