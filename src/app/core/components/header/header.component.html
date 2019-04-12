@@ -1,10 +1,58 @@
 <mat-toolbar color="primary">
-  <div>
-    <a routerLink="/home">Home</a>
-    <a routerLink="/cart">Cart</a>
-    <a routerLink="/order">Order</a>
-    <a routerLink="/user">Users</a>
-    <a routerLink="/user/login">Login</a>
-    <a routerLink="/user/register">Register</a> 
-  </div>
-</mat-toolbar>
+    <div fxHide.gt-xs>
+      <button mat-icon-button  (click)="onToggleSidenav()">
+       <mat-icon>menu</mat-icon>
+     </button>
+   </div>
+    <div class="logo">
+      <a routerLink="/home">
+         Project SPA
+      </a>
+    </div>
+    <div fxFlex fxLayout   fxHide.xs>
+       <ul fxLayout fxLayoutGap="25px" class="navigation-items">
+           <li>
+              <a routerLink="/home">
+                <mat-icon class="icon">home</mat-icon>
+                <span class="label">Home</span>
+              </a>
+           </li>
+           <li>
+              <a routerLink="/cart">
+                  <mat-icon class="icon">add_shopping_cart</mat-icon>
+                  <span class="label">Shop Cart</span>
+              </a>
+           </li>
+           <li>
+              <a routerLink="/order">
+                  <mat-icon class="icon">local_grocery_store</mat-icon>
+                  <span class="label">Order</span>
+              </a>
+           </li>
+           <li>
+              <a routerLink="/user">
+                  <mat-icon class="icon">accessibility_new</mat-icon>
+                  <span class="label">User</span>
+              </a>
+           </li>
+           <li>
+              <a routerLink="/user/register">
+                  <mat-icon class="icon">add_circle_outline</mat-icon>
+                  <span class="label">Register</span>
+              </a>
+           </li>
+            <li>
+              <a routerLink="/user/login">
+                  <mat-icon class="icon">input</mat-icon>
+                  <span  class="label">Login</span>
+              </a>
+           </li>
+           <li>
+               <a [routerLink]="[]" (click)="LogOut()" >
+                 <mat-icon class="icon">backspace</mat-icon>
+                 <span class="label">Log Out</span>
+                </a>
+           </li>
+       </ul>
+    </div>
+   </mat-toolbar>

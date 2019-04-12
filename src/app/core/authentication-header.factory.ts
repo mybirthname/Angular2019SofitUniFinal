@@ -9,17 +9,17 @@ export class AuthenticationHeaderFactory{
     h:HttpHeaders;
     
     Create(type:string): HttpHeaders{
-        this.h = new HttpHeaders();
-        if(type == "Basic"){
-            this.h.append('Authorization', `Basic ${atob(`${appKey}:${appSecret}`)}`);
+        
+        if(type === "Basic"){
+             return new HttpHeaders({'Authorization': `Basic ${btoa(`${appKey}:${appSecret}`)}`});
         }
-        else if(type == "Kinvey"){
-            this.h.append('Authorization', `Kinvey ${token}`);
+        else if(type === "Kinvey"){
+            return new HttpHeaders({'Authorization': `Kinvey ${token}`});
         }
         else{
             throw new Error(`Current Authentication type is not defined ${type}`)
         }
 
-        return this.h;
+         
     }
 }

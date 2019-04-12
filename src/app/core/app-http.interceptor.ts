@@ -12,13 +12,12 @@ export class AppHttpInterceptor implements HttpInterceptor{
         }
 
         let headers = new AuthenticationHeaderFactory().Create(req.params.get('AuthenticationType'));
-        
+
         let cloneRequest = req.clone({
             url: `${apiUrl}/${req.url}`,
             params: req.params.delete('AuthenticationType'),
             headers: headers
-        });
-        
+        });    
 
         return next.handle(cloneRequest);
     }

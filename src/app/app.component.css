@@ -1,0 +1,15 @@
+.mat-sidenav-container{
+  height: calc( 100vh - 52px );
+}
+footer{
+  background: #fafafa;
+}
+
+  
+  
+  .label {
+    display: inline-block;
+    line-height: 30px;
+    margin: 0;
+    width: 85%;
+  }

@@ -1,0 +1,13 @@
+.mat-card{
+    width: 425px;
+}
+
+.password-missmatch{
+    text-align: left;
+    font-size: 75%;
+    margin-top:-15px; 
+}
+
+.redboarder{
+    border:1px solid #f44336;
+}

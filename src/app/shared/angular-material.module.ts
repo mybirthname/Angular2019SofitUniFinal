@@ -1,4 +1,20 @@
-import { MatTabsModule, MatCheckboxModule, MatToolbarModule, MatIconModule } from '@angular/material';
+import { MatTabsModule, 
+          MatCheckboxModule, 
+          MatToolbarModule, 
+          MatIconModule, 
+          MatSidenavModule, 
+          MatListModule, 
+          MatButtonModule,
+          MatMenuModule,
+          MatCardModule,
+          MatFormFieldModule,
+          MatInputModule,
+          MatDatepickerModule,
+          MatNativeDateModule,
+          MatRadioModule,
+          MatSelectModule,
+          MatOptionModule,
+          MatSlideToggleModule} from '@angular/material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,8 +25,39 @@ import { CommonModule } from '@angular/common';
       MatTabsModule,
       MatCheckboxModule,
       MatToolbarModule,
-      MatIconModule
+      MatIconModule,
+      MatSidenavModule,
+      MatListModule,
+      MatButtonModule,      
+      MatMenuModule,      
+      MatCardModule,      
+      MatFormFieldModule,      
+      MatInputModule,      
+      MatDatepickerModule,      
+      MatNativeDateModule,      
+      MatRadioModule,      
+      MatSelectModule,      
+      MatOptionModule,      
+      MatSlideToggleModule  
     ],
-    exports: [MatTabsModule, MatCheckboxModule, MatToolbarModule, MatIconModule]
+    exports: [
+      MatTabsModule, 
+      MatCheckboxModule, 
+      MatToolbarModule, 
+      MatIconModule, 
+      MatSidenavModule,
+      MatListModule,
+      MatButtonModule,      
+      MatMenuModule,      
+      MatCardModule,      
+      MatFormFieldModule,      
+      MatInputModule,      
+      MatDatepickerModule,      
+      MatNativeDateModule,      
+      MatRadioModule,      
+      MatSelectModule,      
+      MatOptionModule,      
+      MatSlideToggleModule  
+    ]
   })
   export class AngularMaterialModule { }

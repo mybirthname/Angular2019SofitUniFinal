@@ -1,0 +1,30 @@
+<mat-nav-list>
+    <a mat-list-item routerLink="/home">
+      <mat-icon class="icon">home</mat-icon>
+      <span class="label">Home</span>
+    </a>
+    <a mat-list-item routerLink="/cart">
+        <mat-icon class="icon">add_shopping_cart</mat-icon>
+        <span class="label">Shop Cart</span>
+    </a>
+    <a mat-list-item routerLink="/order">
+        <mat-icon class="icon">local_grocery_store</mat-icon>
+        <span class="label">Order</span>
+    </a>
+    <a mat-list-item type="button" routerLink="/user">
+        <mat-icon class="icon">accessibility_new</mat-icon>
+        <span class="label">User</span>
+    </a>
+    <a mat-list-item type="button" routerLink="/user/register">
+      <mat-icon class="icon">add_circle_outline</mat-icon>
+      <span class="label">Register</span>
+    </a>
+    <a mat-list-item type="button" routerLink="/user/login">
+      <mat-icon class="icon">input</mat-icon>
+      <span  class="label">Login</span>
+    </a>
+    <a mat-list-item type="button" [routerLink]="[]" (click)="LogOut()">
+        <mat-icon class="icon">backspace</mat-icon>
+        <span class="label">Log Out</span>
+    </a>
+  </mat-nav-list>

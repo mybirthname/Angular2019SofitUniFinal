@@ -4,21 +4,27 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppHttpInterceptor } from './app-http.interceptor';
 import { AppHttpErrorInterceptor } from './app-http-error.interceptor';
-
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MobileHeaderComponent } from './components/mobile-header/mobile-header.component';
 
 
 @NgModule({
-  declarations: [FooterComponent, HeaderComponent],
+  declarations: [FooterComponent, HeaderComponent, MobileHeaderComponent],
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    HttpClientModule
+    
   ],
   providers:[
-    { 
+  { 
     provide:HTTP_INTERCEPTORS, 
     useClass: AppHttpInterceptor,
     multi: true
@@ -28,7 +34,12 @@ import { AppHttpErrorInterceptor } from './app-http-error.interceptor';
     useClass: AppHttpErrorInterceptor,
     multi: true
   }],
-  exports:[FooterComponent, HeaderComponent]
+  exports:[
+    FooterComponent, 
+    HeaderComponent, 
+    MobileHeaderComponent,
+    HttpClientModule
+  ]
 })
 export class CoreModule { 
 

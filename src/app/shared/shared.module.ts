@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
-import { HttpClientModule } from '@angular/common/http';
-
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [],
@@ -11,10 +10,11 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    HttpClientModule
+    FlexLayoutModule,
+    FormsModule
     
   ],
-  exports: [ReactiveFormsModule,AngularMaterialModule, HttpClientModule]
+  exports: [FormsModule, ReactiveFormsModule,AngularMaterialModule, FlexLayoutModule]
 })
 export class SharedModule { 
 
