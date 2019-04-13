@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.sb = this.userService.logIn(this.form.value).subscribe((data)=>{
       this.loading = false;
       this.router.navigate(['/home']);
-    });
+    },
+    (err)=>{this.loading = false;});
   }
 
   ngOnDestroy(): void {

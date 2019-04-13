@@ -5,21 +5,33 @@ import { ILoginCredentials } from '../../user/dto/ILoginCredentials';
 import { environment } from 'src/environments/environment';
 import { CoreModule } from '@angular/flex-layout';
 import { Observable } from 'rxjs';
-import { map,tap} from 'rxjs/operators';
+import { tap} from 'rxjs/operators';
 import { IUser } from 'src/app/user/dto/IUser';
+import { IBaseBO } from './IBaseBO';
+import { BaseBO } from './BaseBO';
 
 
 @Injectable({
   providedIn: CoreModule
 })
-export class UserService {
+export class UserService extends BaseBO<IUser>{
 
-  constructor(private httpClient:HttpClient) {
+
+  constructor(public httpClient:HttpClient) {
+    super(httpClient);
+    this.additionalUrl = `user/${environment.appKey}`;
+    
+    this.httpParams = {
+      list:new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.KinveyAuthenticationType),
+      create:new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.BasicAuthenticationType),
+      delete:new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.KinveyAuthenticationType),
+      edit: new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.KinveyAuthenticationType)
+    } 
+
    }
 
    logIn(credentials:ILoginCredentials):Observable<Object>{
     const paramsObject = new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.BasicAuthenticationType)
-
     return this.httpClient
               .post(`user/${environment.appKey}/login`, credentials, {params:paramsObject})
               .pipe(tap(response=>{
@@ -27,8 +39,6 @@ export class UserService {
                 localStorage.setItem(MagicStrings.Token, response['_kmd']['authtoken']);
                 localStorage.setItem(MagicStrings.UserId, response['_id']);
                 localStorage.setItem(MagicStrings.IsSuperAdmin, response['IsAdmin']);
-
-                
               }));
    }
 
@@ -38,16 +48,6 @@ export class UserService {
       localStorage.removeItem(MagicStrings.UserId);
       localStorage.removeItem(MagicStrings.IsSuperAdmin);
    }
-
-
-   create(user:IUser):Observable<IUser>{
-    const paramsObject = new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.BasicAuthenticationType)
-    
-    return this.httpClient
-            .post<IUser>(`user/${environment.appKey}`, user, {params:paramsObject});
-    
-  }
-
-  
+   
 
 }

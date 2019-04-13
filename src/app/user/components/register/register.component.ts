@@ -53,7 +53,8 @@ export class RegisterComponent implements OnInit {
       this.loading = false;
       this.toastrService.success('User is created')
       this.router.navigate(['/home']);
-    });
+    },
+    err =>{this.loading=false;});
   }
 
   ngOnInit() {

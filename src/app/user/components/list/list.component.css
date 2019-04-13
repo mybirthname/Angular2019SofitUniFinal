@@ -1,0 +1,24 @@
+table{
+    margin-top: 50px;
+}
+
+.mat-table__wrapper .mat-table {
+    min-width: auto !important;
+    width: 100% !important;
+}
+
+.mat-header-row {
+    width: 100%;
+}
+
+.mat-row {
+    width: 100%;
+}
+
+.mat-cell{
+    min-width: 300px;
+}
+
+.spinner{
+    margin-top:250px;
+}

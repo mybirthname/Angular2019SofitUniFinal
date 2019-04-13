@@ -15,7 +15,8 @@ import { MatTabsModule,
           MatSelectModule,
           MatOptionModule,
           MatSlideToggleModule,
-          MatProgressSpinnerModule} from '@angular/material';
+          MatProgressSpinnerModule,
+          MatTableModule} from '@angular/material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -40,7 +41,8 @@ import { CommonModule } from '@angular/common';
       MatSelectModule,      
       MatOptionModule,      
       MatSlideToggleModule,
-      MatProgressSpinnerModule  
+      MatProgressSpinnerModule,
+      MatTableModule
     ],
     exports: [
       MatTabsModule, 
@@ -60,7 +62,8 @@ import { CommonModule } from '@angular/common';
       MatSelectModule,      
       MatOptionModule,      
       MatSlideToggleModule,
-      MatProgressSpinnerModule  
+      MatProgressSpinnerModule,
+      MatTableModule
     ]
   })
   export class AngularMaterialModule { }
