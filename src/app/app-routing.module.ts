@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { CustomPreloader } from './core/services/custom-preloader';
+import { SuperAdminGuard } from './core/services/super-admin.guard';
+
 
 const routes: Routes = [
   {
@@ -20,13 +22,22 @@ const routes: Routes = [
   },
   {
     path:'order',
-    loadChildren:'./order/order.module#OrderModule'
+    loadChildren:'./order/order.module#OrderModule',
+    canLoad: [SuperAdminGuard]
   },
   {
     path:'user',
     loadChildren: './user/user.module#UserModule'
+  },
+  {
+    path:'catalog',
+    loadChildren:'./catalog/catalog.module#CatalogModule',
+    canLoad: [SuperAdminGuard]
+  },
+  {
+    path:"**",
+    redirectTo: 'home'
   }
-
 ];
 
 @NgModule({

@@ -1,8 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import * as MagicStrings from 'src/app/shared/magic-strings';
+import { IAppState, getIsAuthenticated, getIsSuperAdmin, getAuthUserName } from 'src/app/+store';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { LogOut } from 'src/app/+store/auth/actions';
+
 
 @Component({
   selector: 'app-header',
@@ -12,10 +13,15 @@ import * as MagicStrings from 'src/app/shared/magic-strings';
 export class HeaderComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
-
- 
+  isLogged$: Observable<boolean>
+  isSuperAdmin$:Observable<boolean>
+  userName$: Observable<string>
   
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private store:Store<IAppState>) { 
+    this.isLogged$ = store.select(getIsAuthenticated);
+    this.isSuperAdmin$ = store.select(getIsSuperAdmin);
+    this.userName$ = store.select(getAuthUserName);
+  }
 
   ngOnInit() {
   }
@@ -24,17 +30,12 @@ export class HeaderComponent implements OnInit {
     this.sidenavToggle.emit();
   }
 
-  isAuthenticated(){
-    return localStorage.getItem(MagicStrings.Token) != null;
-  }
 
-  isSuperAdmin(){
-    return localStorage.getItem(MagicStrings.IsSuperAdmin) == "1";
-  }
+
 
   logOut(){
-    this.userService.logOut()
-    this.router.navigateByUrl('/home');    
+    this.store.dispatch(new LogOut(null));
+     
 
   }
 

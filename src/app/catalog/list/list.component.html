@@ -1,27 +1,29 @@
-<div align="center"><h1>Users</h1></div>
+
+<div>
+<div align="center"><h1>Catalog</h1></div>
 <table *ngIf="!loading" mat-table [dataSource]="dataSource" class="mat-elevation-z8" align="center">
     <!-- Position Column -->
-    <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef> First Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    <ng-container matColumnDef="nr">
+      <th mat-header-cell *matHeaderCellDef> Number </th>
+      <td mat-cell *matCellDef="let element"> {{element.nr}} </td>
     </ng-container>
   
     <!-- Name Column -->
-    <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef> Last Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
     </ng-container>
   
     <!-- Weight Column -->
-    <ng-container matColumnDef="username">
-      <th mat-header-cell *matHeaderCellDef> UserName </th>
-      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    <ng-container matColumnDef="pricePerPq">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.pricePerPq}} </td>
     </ng-container>
   
     <!-- Symbol Column -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let element"> {{element.category}} </td>
     </ng-container>
 
     <ng-container matColumnDef="_id">
@@ -40,7 +42,13 @@
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
   </table>
 
+  <div *ngIf="!loading" class="newButton">                
+      <button type="button" mat-raised-button color="primary" (click)="newRecord()">New</button>  
+  </div>
+</div>
+
   <div class="spinner" align="center" *ngIf="loading" >
       <mat-spinner></mat-spinner>
   </div>  
+  
   

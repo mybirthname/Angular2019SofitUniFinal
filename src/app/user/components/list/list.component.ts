@@ -27,6 +27,15 @@ export class ListComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
+  deleteRecord(id:string){
+     this.loading = true;
+     this.sb = this.userService.delete(id).subscribe(data=>{
+      this.loading = false;
+      
+      this.dataSource = this.dataSource.filter(x=> x._id != id);
+     },
+     err=>this.loading=false);
+  }
 
   ngOnDestroy(): void {
     this.sb.unsubscribe();

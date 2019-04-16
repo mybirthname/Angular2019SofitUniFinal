@@ -4,9 +4,7 @@ export interface IOrder{
     description:string;
     deliveryDate:Date;
     user:string;
-    city:string;
-    street:string;
-    buildingNr:string;
-    status:number;
-    
+    status:string;
+    address:string;
+    phone:string;
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
-import * as MagicStrings from 'src/app/shared/magic-strings';
+import { Store } from '@ngrx/store';
+import { IAppState, getIsAuthenticated, getIsSuperAdmin, getAuthUserName } from 'src/app/+store';
+import { Observable } from 'rxjs';
+import { LogOut } from 'src/app/+store/auth/actions';
 
 @Component({
   selector: 'app-mobile-header',
@@ -10,22 +11,21 @@ import * as MagicStrings from 'src/app/shared/magic-strings';
 })
 export class MobileHeaderComponent implements OnInit {
 
-  constructor(private userService:UserService, private router:Router) { }
+  isLogged$: Observable<boolean>
+  isSuperAdmin$:Observable<boolean>
+
+  
+  constructor(private store:Store<IAppState>) { 
+    this.isLogged$ = store.select(getIsAuthenticated);
+    this.isSuperAdmin$ = store.select(getIsSuperAdmin);
+
+  }
 
   ngOnInit() {
   }
 
   logOut(){
-    this.userService.logOut()
-    this.router.navigateByUrl('/home');    
-
+    this.store.dispatch(new LogOut(null));
   }
 
-  isAuthenticated(){
-    return localStorage.getItem(MagicStrings.Token) != null;
-  }
-  
-  isSuperAdmin(){
-    return localStorage.getItem(MagicStrings.IsSuperAdmin) == "1";
-  }
 }

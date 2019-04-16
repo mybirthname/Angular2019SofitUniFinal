@@ -10,6 +10,10 @@ import { AppHttpErrorInterceptor } from './app-http-error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MobileHeaderComponent } from './components/mobile-header/mobile-header.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../+store';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from '../+store/auth/effects';
 
 
 @NgModule({
@@ -20,7 +24,11 @@ import { MobileHeaderComponent } from './components/mobile-header/mobile-header.
     SharedModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([
+      AuthEffects
+    ])
     
   ],
   providers:[

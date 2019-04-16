@@ -3,11 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './components/list/list.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import {EditComponent} from './components/edit/edit.component';
+import { SuperAdminGuard } from '../core/services/super-admin.guard';
+import { AuthGuard } from '../core/services/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: ListComponent
+    component: ListComponent,
+    canActivate: [SuperAdminGuard]
   },
   {
     path:'login',
@@ -16,6 +20,11 @@ const routes: Routes = [
   {
     path:'register',
     component: RegisterComponent
+  },
+  {
+    path:'edit/:id',
+    component: EditComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

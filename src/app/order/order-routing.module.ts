@@ -8,10 +8,14 @@ import { EditComponent } from './components/edit/edit.component';
 const routes: Routes = [
   {
     path: '',
-    component: ListComponent 
+    component: ListComponent
   },
   {
-    path: '/edit/:id',
+    path:'edit',
+    component:EditComponent
+  },
+  {
+    path: 'edit/:id',
     component: EditComponent
   }
 ];

@@ -10,7 +10,8 @@ import { OrderRoutingModule } from './order-routing.module';
   declarations: [ListComponent, EntityComponent, EditComponent],
   imports: [
     CommonModule,
-    OrderRoutingModule
+    OrderRoutingModule,
+    SharedModule
   ],
   exports:[]
 })

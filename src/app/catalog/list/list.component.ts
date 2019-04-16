@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CatalogService } from 'src/app/core/services/catalog.service';
 import { Subscription } from 'rxjs';
-import { OrderService } from 'src/app/core/services/order.service';
-import { IOrder } from '../../dto/IOrder';
+import { IArticle } from '../dto/ICatalog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,14 +11,14 @@ import { Router } from '@angular/router';
 })
 export class ListComponent implements OnInit {
 
-  dataSource:IOrder[];
+  dataSource:IArticle[];
   sb:Subscription;
-  columnsToDisplay = ['nrIntern', 'title', 'user', 'deliveryDate', '_id'];
+  columnsToDisplay = ['nr', 'title', 'pricePerPq', 'category', '_id'];
   loading:boolean;
 
-  constructor(private orderService: OrderService, private router:Router) { 
+  constructor(private catalogService: CatalogService, private router:Router) { 
     this.loading = true;
-    this.sb = orderService.list().subscribe(data=>{
+    this.sb = catalogService.list().subscribe(data=>{
       this.dataSource = data;
       this.loading = false;
     });
@@ -29,17 +29,18 @@ export class ListComponent implements OnInit {
 
   deleteRecord(id:string){
      this.loading = true;
-     this.sb = this.orderService.delete(id).subscribe(data=>{
+     this.sb = this.catalogService.delete(id).subscribe(data=>{
       this.loading = false;
      },
      err=>this.loading=false);
   }
 
   newRecord(){
-    this.router.navigate(["/order/edit"]);
+    this.router.navigate(["/catalog/edit"]);
   }
 
   ngOnDestroy(): void {
     this.sb.unsubscribe();
   }
+
 }

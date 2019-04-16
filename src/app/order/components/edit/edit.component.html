@@ -1,3 +1,69 @@
-<p>
-  edit works!
-</p>
+<mat-card class=".mat-card">    
+    <!-- Title of an Card -->    
+    <mat-card-title>    
+        Order  
+    </mat-card-title>    
+    
+    <mat-card-content *ngIf="!loading">    
+        <form [formGroup]="form">    
+            <mat-form-field class="demo-full-width">    
+                <input matInput placeholder="Number" formControlName="nrIntern">   
+                <mat-error>
+                    <span *ngIf="form.get('nrIntern').touched && form.get('nrIntern').hasError('required')">Required Field</span>
+                    <span *ngIf="form.get('nrIntern').touched && form.get('nrIntern').hasError('minlength')">Min length 6 symbols</span>
+                </mat-error> 
+            </mat-form-field>    
+
+            <mat-form-field class="demo-full-width">    
+                <input matInput placeholder="Title" formControlName="title"> 
+                <mat-error>
+                    <span *ngIf="form.get('title').touched && form.get('title').hasError('required')">Required Field</span>
+                    <span *ngIf="form.get('title').touched && form.get('title').hasError('minlength')">Min length 6 symbols</span>
+                </mat-error>    
+            </mat-form-field>
+            
+            <mat-form-field class="demo-full-width">    
+                <input matInput placeholder="Status" formControlName="status"> 
+                <mat-error>
+                    <span *ngIf="form.get('status').touched && form.get('status').hasError('required')">Required Field</span>
+                </mat-error>    
+            </mat-form-field>
+
+            <mat-form-field class="demo-full-width">    
+                <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="address"></textarea> 
+                <mat-error>
+                    <span *ngIf="form.get('address').touched && form.get('address').hasError('required')">Required Field</span>
+                </mat-error>    
+            </mat-form-field>  
+            <mat-form-field class="demo-full-width">    
+                <textarea matInput placeholder="Phone" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="phone"></textarea> 
+                <mat-error>
+                    <span *ngIf="form.get('phone').touched && form.get('phone').hasError('required')">Required Field</span>
+                </mat-error>    
+            </mat-form-field>   
+        
+            <mat-form-field class="demo-full-width">    
+                <input matInput [matDatepicker]="picker" placeholder="Delivery Date" formControlName="deliveryDate">    
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>    
+                <mat-datepicker touchUi="true" #picker></mat-datepicker>    
+                <mat-error>
+                    <span *ngIf="form.get('deliveryDate').touched && form.get('deliveryDate').hasError('required')">Required Field</span>
+                </mat-error>    
+
+            </mat-form-field>    
+        
+       
+            <div class="content-center">    
+                <button type="button" *ngIf="orderId!=null" mat-raised-button color="primary" [disabled]="form.invalid" (click)="edit()">Edit</button> 
+                <button type="button" *ngIf="orderId == null" mat-raised-button color="primary" [disabled]="form.invalid" (click)="create()">Create</button> 
+
+                <button type="button" mat-raised-button color="primary" (click)="back()">Back</button>  
+            </div>    
+        </form>    
+    </mat-card-content>    
+
+    <div *ngIf="loading">
+        <mat-spinner></mat-spinner>
+    </div>   
+</mat-card>   
+

@@ -1,27 +1,25 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../../../core/services/user.service';
+import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ILoginCredentials } from '../../dto/ILoginCredentials';
-import { Router } from '@angular/router';
+
 import { Subscription } from 'rxjs';
-import { setBindingRoot } from '@angular/core/src/render3/state';
+
+import { Store } from '@ngrx/store';
+import { Login } from 'src/app/+store/auth/actions';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
  
-  credentials: ILoginCredentials
   form:FormGroup;
-  sb:Subscription;
   loading:boolean;
   
-  constructor(private userService:UserService, 
-              private fb:FormBuilder,
-              private router:Router) {
+  constructor(private store: Store<any>,
+              private fb:FormBuilder) {
     this.form = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -33,16 +31,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(){
-    this.loading = true;
-    this.sb = this.userService.logIn(this.form.value).subscribe((data)=>{
-      this.loading = false;
-      this.router.navigate(['/home']);
-    },
-    (err)=>{this.loading = false;});
+    this.store.dispatch(new Login(this.form.value));
   }
 
-  ngOnDestroy(): void {
-    if(this.sb!=null)
-      this.sb.unsubscribe();
-  }
+
 }
