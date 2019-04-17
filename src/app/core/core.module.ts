@@ -14,6 +14,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../+store';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from '../+store/auth/effects';
+import { UserEffects } from '../+store/user/effects';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { AuthEffects } from '../+store/auth/effects';
     HttpClientModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
-      AuthEffects
+      AuthEffects,
+      UserEffects
     ])
     
   ],

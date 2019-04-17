@@ -5,3 +5,4 @@ export const getUserId = (state:IState) => state.userId;
 export const getUserName = (state:IState) => state.username;
 export const getErrorMsg = (state:IState) => state.errorMessage;
 export const getIsSuperAdmin = (state:IState) => state.IsAdmin;
+export const getIsLoading = (state:IState) => state.isLoading;

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CoreModule } from 'src/app/core/core.module';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import { ActionTypes, Login, LoginSuccess, LoginFailed, LogOut, LogOutSuccess, SetToken } from './actions';
+import { ActionTypes, Login, LoginSuccess, LoginFailed, LogOut, LogOutSuccess, SetToken, Register, RegisterSuccess } from './actions';
 import { UserService } from 'src/app/core/services/user.service';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -13,7 +12,10 @@ import { of } from 'rxjs';
 })
 export class AuthEffects{
 
-    constructor(private actions$: Actions, private userService:UserService, private router:Router){
+    constructor(private actions$: Actions, 
+        private userService:UserService, 
+        private router:Router,
+        private toastr: ToastrService){
 
     }
 
@@ -30,6 +32,25 @@ export class AuthEffects{
         return [new SetToken({token, username, userId,IsAdmin})];
     }));
 
+
+    @Effect() register$ = this.actions$.pipe(ofType<Register>(ActionTypes.Register),
+    map(action=> action.payload),
+    switchMap((data)=>{
+        return this.userService.create(data).pipe(
+            map(()=>{
+            return new RegisterSuccess(data);
+        }),
+        tap((result)=>{
+            
+            this.toastr.success(`User is ${result.payload.firstName} ${result.payload.lastName}  created`)
+            this.router.navigate(['/home']);
+        }),
+        catchError(((err)=> [new LoginFailed({error: err})]))
+        
+        )
+    })
+
+    );
 
 
     @Effect() login$ = this.actions$.pipe(ofType<Login>(ActionTypes.Login),
@@ -53,7 +74,7 @@ export class AuthEffects{
             catchError((err)=> [new LoginFailed({error: err})])
         )
     })
-    )
+    );
 
     @Effect() logOut$ = this.actions$.pipe(ofType<LogOut>(ActionTypes.LogOut),
     map(action=>{
@@ -61,5 +82,5 @@ export class AuthEffects{
 
         this.router.navigate(['/home']); 
         return new LogOutSuccess(null);
-     } ))
+     } ));
 }

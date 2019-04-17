@@ -41,18 +41,18 @@ export class LogOutFailed implements IAction<null>{
     }
 }
 
-export class Register implements IAction<{username:string, password:string}>{
+export class Register implements IAction<any>{
     type= ActionTypes.Register;
 
-    constructor(public payload: {username:string, password:string}){
+    constructor(public payload: any){
 
     }
 }
 
-export class RegisterSuccess implements IAction<null>{
+export class RegisterSuccess implements IAction<{firstName:string, lastName:string}>{
     type= ActionTypes.RegisterSuccess;
 
-    constructor(public payload = null){
+    constructor(public payload :{firstName:string, lastName:string}){
 
     }
 }
@@ -95,6 +95,17 @@ export class SetToken implements IAction<{token:string, username:string, userId:
         
     }
 }
+
+export type Actions = Register|
+    RegisterSuccess |
+    RegisterFailed |
+    Login |
+    LoginSuccess |
+    LoginFailed | 
+    LogOutSuccess |
+    LogOutFailed |
+    LogOut
+    SetToken;
 
 
 

@@ -1,8 +1,11 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { UserService } from 'src/app/core/services/user.service';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import {Store} from '@ngrx/store';
+import { Register } from 'src/app/+store/auth/actions';
+import { Observable } from 'rxjs';
+import { getIsLoading } from 'src/app/+store/auth/selectors';
+import { getIsAuthenticated, getIsLoadingValue } from 'src/app/+store';
+import { IState } from 'src/app/+store/auth/reducer';
 
 @Component({
   selector: 'app-register',
@@ -11,13 +14,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegisterComponent implements OnInit {
 
-  loading:boolean;
+  loading$:Observable<boolean>;
 
   form:FormGroup;
   constructor(private fb:FormBuilder, 
-              private userService:UserService, 
-              private router:Router,
-              private toastrService:ToastrService)  { 
+              private store: Store<any>)  { 
 
     this.form = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(6)]],
@@ -32,9 +33,12 @@ export class RegisterComponent implements OnInit {
       }, {validators:this.passCheck})
     });
 
+    this.loading$ = this.store.select(getIsLoadingValue);
 
   }
 
+  ngOnInit(): void {
+  }
 
   passCheck(c: AbstractControl): { passwordMismatch: boolean } {
 
@@ -47,18 +51,8 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    this.loading=true;
-    this.userService.create(this.form.value).subscribe((data)=>{
 
-      this.loading = false;
-      this.toastrService.success('User is created')
-      this.router.navigate(['/home']);
-    },
-    err =>{this.loading=false;});
-  }
-
-  ngOnInit() {
-   
+    this.store.dispatch(new Register(this.form.value));
   }
 
 }

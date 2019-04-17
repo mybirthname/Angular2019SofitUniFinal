@@ -1,43 +1,37 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IUser } from '../../dto/IUser';
 import { UserService } from 'src/app/core/services/user.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { IAppState, getUserListColl, getUserLoading } from 'src/app/+store';
+import { Store } from '@ngrx/store';
+import { UserList, UserDelete } from 'src/app/+store/user/actions';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit{
 
-  dataSource:IUser[];
-  sb:Subscription;
+  dataSource$:Observable<IUser[]>;
   columnsToDisplay = ['firstName', 'lastName', 'username', 'email', '_id'];
-  loading:boolean;
+  loading$:Observable<boolean>;
 
-  constructor(private userService: UserService) { 
-    this.loading = true;
-    this.sb = userService.list().subscribe(data=>{
-      console.log(data);
-      this.dataSource = data;
-      this.loading = false;
-    });
+  constructor(private store:Store<IAppState>) { 
+    
+    store.dispatch(new UserList(null));
+
   }
 
   ngOnInit() {
+    //selectors are not working, question ? 
+    this.loading$ = this.store.select(getUserLoading);
+    this.dataSource$ = this.store.select(getUserListColl);
+
   }
 
   deleteRecord(id:string){
-     this.loading = true;
-     this.sb = this.userService.delete(id).subscribe(data=>{
-      this.loading = false;
-      
-      this.dataSource = this.dataSource.filter(x=> x._id != id);
-     },
-     err=>this.loading=false);
+    this.store.dispatch(new UserDelete({id}));
   }
 
-  ngOnDestroy(): void {
-    this.sb.unsubscribe();
-  }
 }

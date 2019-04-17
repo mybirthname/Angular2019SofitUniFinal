@@ -1,3 +1,69 @@
-<p>
-  edit works!
-</p>
+<mat-card>    
+    <!-- Title of an Card -->    
+    <mat-card-title>    
+        User  
+    </mat-card-title>   
+
+      
+
+    <mat-card-content *ngIf="!(loading$ | async)">
+        <form [formGroup]="form">    
+            <mat-form-field class="demo-full-width">    
+                <input matInput placeholder="First Name" formControlName="firstName">   
+                <mat-error>
+                    <span *ngIf="form.get('firstName').touched && form.get('firstName').hasError('required')">Required Field</span>
+                    <span *ngIf="form.get('firstName').touched && form.get('firstName').hasError('minlength')">Min length 6 symbols</span>
+                </mat-error> 
+            </mat-form-field>    
+
+            <mat-form-field class="demo-full-width">    
+                <input matInput placeholder="Last Name" formControlName="lastName"> 
+                <mat-error>
+                    <span *ngIf="form.get('lastName').touched && form.get('lastName').hasError('required')">Required Field</span>
+                    <span *ngIf="form.get('lastName').touched && form.get('lastName').hasError('minlength')">Min length 6 symbols</span>
+                </mat-error>    
+            </mat-form-field>
+            
+            <mat-form-field class="demo-full-width">    
+                <input matInput placeholder="Username" formControlName="username" autocomplete="username"> 
+                <mat-error>
+                    <span *ngIf="form.get('username').touched && form.get('username').hasError('required')">Required Field</span>
+                </mat-error>    
+            </mat-form-field>
+
+            <mat-form-field class="demo-full-width">    
+                <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="address"></textarea> 
+                <mat-error>
+                    <span *ngIf="form.get('address').touched && form.get('address').hasError('required')">Required Field</span>
+                </mat-error>    
+            </mat-form-field>    
+        
+            <mat-form-field class="demo-full-width">    
+                <input matInput [matDatepicker]="picker" placeholder="Date of birth" formControlName="birthDate">    
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>    
+                <mat-datepicker touchUi="true" #picker></mat-datepicker>    
+                <mat-error>
+                    <span *ngIf="form.get('birthDate').touched && form.get('birthDate').hasError('required')">Required Field</span>
+                </mat-error>    
+
+            </mat-form-field>    
+        
+            <mat-form-field class="demo-full-width">    
+                <input matInput placeholder="Email" autocomplete="email" formControlName="email">    
+                <mat-error>
+                    <span *ngIf="form.get('email').touched && form.get('email').hasError('required')">Required Field</span>
+                    <span *ngIf="form.get('email').touched && form.get('email').hasError('email')">Not valid email</span>
+                </mat-error>    
+            </mat-form-field>   
+
+            <div class="content-center">    
+                <button type="button" mat-raised-button color="primary" [disabled]="form.invalid" (click)="edit()">Edit</button>    
+            </div>    
+        </form>    
+    </mat-card-content>    
+
+    <div *ngIf="(loading$ | async)">
+        <mat-spinner></mat-spinner>
+    </div>   
+</mat-card>   
+

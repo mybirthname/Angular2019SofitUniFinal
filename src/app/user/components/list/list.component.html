@@ -1,5 +1,5 @@
 <div align="center"><h1>Users</h1></div>
-<table *ngIf="!loading" mat-table [dataSource]="dataSource" class="mat-elevation-z8" align="center">
+<table *ngIf="!(loading$ | async)" mat-table [dataSource]="(dataSource$ | async)" class="mat-elevation-z8" align="center">
     <!-- Position Column -->
     <ng-container matColumnDef="firstName">
       <th mat-header-cell *matHeaderCellDef> First Name </th>
@@ -40,7 +40,7 @@
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
   </table>
 
-  <div class="spinner" align="center" *ngIf="loading" >
+  <div class="spinner" align="center" *ngIf="(loading$ | async)" >
       <mat-spinner></mat-spinner>
   </div>  
   

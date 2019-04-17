@@ -18,7 +18,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
     AppRoutingModule,
     CoreModule,
     SharedModule
-    
   ],
   providers: [],
   bootstrap: [AppComponent]

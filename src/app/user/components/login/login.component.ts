@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ILoginCredentials } from '../../dto/ILoginCredentials';
 
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { Login } from 'src/app/+store/auth/actions';
+import { getIsLoadingValue } from 'src/app/+store';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
  
   form:FormGroup;
-  loading:boolean;
+  loading$:Observable<boolean>;
   
   constructor(private store: Store<any>,
               private fb:FormBuilder) {
@@ -25,6 +25,9 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]]
     })
 
+    
+
+    this.loading$ = store.select(getIsLoadingValue);
    }
 
   ngOnInit() {
