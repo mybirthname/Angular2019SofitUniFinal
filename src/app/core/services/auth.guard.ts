@@ -5,6 +5,7 @@ import { CoreModule } from '../core.module';
 import * as MagicStrings from 'src/app/shared/magic-strings';
 import { Store } from '@ngrx/store';
 import { IAppState, getIsAuthenticated } from 'src/app/+store';
+import { take } from 'rxjs/operators';
 
 
 
@@ -21,11 +22,11 @@ export class AuthGuard implements CanActivate, CanLoad {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-      return this.store.select(getIsAuthenticated);
+      return this.store.select(getIsAuthenticated).pipe(take(1));
   }
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-      return this.store.select(getIsAuthenticated);
+      return this.store.select(getIsAuthenticated).pipe(take(1));
   }
 }
