@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import { MaxSymbolsPipe } from './max-symbols.pipe';
+import { HighlightDirective } from './highlight.directive';
 
 @NgModule({
-  declarations: [],
+  declarations: [MaxSymbolsPipe, HighlightDirective],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -14,7 +16,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     FormsModule
     
   ],
-  exports: [FormsModule, ReactiveFormsModule,AngularMaterialModule, FlexLayoutModule]
+  exports: [FormsModule, ReactiveFormsModule,AngularMaterialModule, FlexLayoutModule, MaxSymbolsPipe, HighlightDirective]
 })
 export class SharedModule { 
 

@@ -1,4 +1,4 @@
-<div align="center"><h1>Users</h1></div>
+<div align="center"><h1 appHighlight highlightColor="yellow">Users</h1></div>
 <table *ngIf="!(loading$ | async)" mat-table [dataSource]="(dataSource$ | async)" class="mat-elevation-z8" align="center">
     <!-- Position Column -->
     <ng-container matColumnDef="firstName">

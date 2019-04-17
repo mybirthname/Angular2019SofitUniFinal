@@ -17,13 +17,7 @@
                 <span class="label">Home</span>
               </a>
            </li>
-           <li>
-              <a routerLink="/cart">
-                  <mat-icon class="icon">add_shopping_cart</mat-icon>
-                  <span class="label">Shop Cart</span>
-              </a>
-           </li>
-           <li *ngIf="(isSuperAdmin$ | async)">
+           <li *ngIf="(isLogged$ | async)">
                <a routerLink="/catalog" >
                    <mat-icon class="icon">speaker_notes</mat-icon>
                    <span class="label">Catalog</span>

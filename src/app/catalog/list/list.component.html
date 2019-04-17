@@ -1,6 +1,6 @@
 
 <div>
-<div align="center"><h1>Catalog</h1></div>
+<div align="center"><h1 appHighlight highlightColor="yellow">Catalog</h1></div>
 <table *ngIf="!loading" mat-table [dataSource]="dataSource" class="mat-elevation-z8" align="center">
     <!-- Position Column -->
     <ng-container matColumnDef="nr">
@@ -11,7 +11,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef> Title </th>
-      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.title | maxSymbols: 25}} </td>
     </ng-container>
   
     <!-- Weight Column -->
@@ -23,7 +23,7 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef> Category </th>
-      <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.category | maxSymbols: 25}} </td>
     </ng-container>
 
     <ng-container matColumnDef="_id">

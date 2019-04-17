@@ -3,9 +3,9 @@
       <mat-icon class="icon">home</mat-icon>
       <span class="label">Home</span>
     </a>
-    <a mat-list-item routerLink="/cart">
-        <mat-icon class="icon">add_shopping_cart</mat-icon>
-        <span class="label">Shop Cart</span>
+    <a *ngIf="(isLogged$ | async)" mat-list-item routerLink="/catalog">
+      <mat-icon class="icon">local_grocery_store</mat-icon>
+      <span class="label">Catalog</span>
     </a>
     <a *ngIf="(isSuperAdmin$ | async)" mat-list-item routerLink="/order">
         <mat-icon class="icon">local_grocery_store</mat-icon>
