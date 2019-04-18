@@ -104,7 +104,7 @@ export class CatalogNewSuccess implements IAction<any>{
 
     }
 }
-export class CatalogNew implements IAction<any>{
+export class CatalogNew implements IAction<{entity:any}>{
     type=ActionTypes.CatalogNew;
 
     constructor(public payload:any){

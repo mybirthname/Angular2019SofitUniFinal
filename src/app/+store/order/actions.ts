@@ -19,8 +19,8 @@ export const ActionTypes = {
 
 }
 
-export class OrderEdit implements IAction<null>{
-    type=ActionTypes.OrderEdit;
+export class OrderList implements IAction<null>{
+    type=ActionTypes.OrderList;
 
     constructor(public payload:null){
 
@@ -43,8 +43,8 @@ export class OrderEditFailed implements IAction<any>{
     }
 }
 
-export class OrderDelete implements IAction<{id:string, entity:any}>{
-    type=ActionTypes.OrderDelete;
+export class OrderEdit implements IAction<{id:string, entity:any}>{
+    type=ActionTypes.OrderEdit;
 
     constructor(public payload:{id:string, entity:any}){
 
@@ -67,8 +67,8 @@ export class OrderDeleteFailed implements IAction<any>{
     }
 }
 
-export class OrderList implements IAction<{id:string}>{
-    type=ActionTypes.OrderList;
+export class OrderDelete implements IAction<{id:string}>{
+    type=ActionTypes.OrderDelete;
 
     constructor(public payload:{id:string}){
 
@@ -91,7 +91,7 @@ export class OrderListFailed implements IAction<any>{
     }
 }
 
-export class OrderNew implements IAction<any>{
+export class OrderNew implements IAction<{entity:any}>{
     type=ActionTypes.OrderNew;
 
     constructor(public payload:any){

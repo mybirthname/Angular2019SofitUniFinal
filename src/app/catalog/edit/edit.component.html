@@ -4,7 +4,7 @@
         Order  
     </mat-card-title>    
     
-    <mat-card-content *ngIf="!loading">    
+    <mat-card-content *ngIf="!(loading$ | async)">    
         <form [formGroup]="form">    
             <mat-form-field class="demo-full-width">    
                 <input matInput placeholder="Number" formControlName="nr">   
@@ -60,7 +60,7 @@
         </form>    
     </mat-card-content>    
 
-    <div *ngIf="loading">
+    <div *ngIf="(loading$ | async)">
         <mat-spinner></mat-spinner>
     </div>   
 </mat-card>   

@@ -1,8 +1,9 @@
 export interface IArticle{
-    title:string;
+    _id:string;
     nr:string;
+    title:string;
     pictureUrl:string;
-    pricePerPq:number;
     description:string;
+    pricePerPq:number;
     category:string;
 }

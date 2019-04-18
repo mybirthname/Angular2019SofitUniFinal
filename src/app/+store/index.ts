@@ -1,18 +1,26 @@
 
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {reducer as authReducer, IState as IAuthState} from './auth/reducer'
+import {reducer as authReducer, IState as IAuthState} from './auth/reducer';
 import {reducer as userReducer, IState as IUserState} from './user/reducer';
+import {reducer as orderReducer, IState as IOrderState} from './order/reducer';
+import {reducer as catalogReducer, IState as ICatalogState} from './catalog/reducer';
 import * as auth from './auth/selectors';
 import * as user from './user/selectors';
+import * as order from './order/selector';
+import * as catalog from './catalog/selectors';
 
 export const reducers = {
     auth:authReducer,
-    user:userReducer
+    user:userReducer,
+    order:orderReducer,
+    catalog: catalogReducer
 };
 
 export interface IAppState{
     auth: IAuthState,
-    user: IUserState
+    user: IUserState,
+    order: IOrderState,
+    catalog: ICatalogState
 }
 
 //#region AuthSelectors
@@ -37,8 +45,22 @@ export const getUserStore = createFeatureSelector('user');
 export const getUserListColl = createSelector(getUserStore, user.getUserList);
 export const getUserLoading = createSelector(getUserStore, user.getIsLoading);
 
-//export const getUserListCollValue = createSelector(getUserListColl, x=>{ console.log(x) })
+//#endregion
 
+//#region OrderSelectors
+
+export const getOrderStore = createFeatureSelector('order');
+
+export const getOrderListCollection = createSelector(getOrderStore, order.getOrderList);
+export const getOrderLoading = createSelector(getOrderStore, order.getIsLoading);
 
 //#endregion
 
+//#region CatalogSelectors
+
+export const getCatalogStore = createFeatureSelector('catalog');
+
+export const getCatalogListCollection = createSelector(getCatalogStore, catalog.getCatalogList);
+export const getCatalogLoading = createSelector(getCatalogStore, catalog.getIsLoading);
+
+//#endregion

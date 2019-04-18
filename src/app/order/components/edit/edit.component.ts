@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { OrderService } from 'src/app/core/services/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IOrder } from '../../dto/IOrder';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { IAppState, getOrderLoading, getOrderListCollection } from 'src/app/+store';
+import { Store } from '@ngrx/store';
+import { OrderEdit, OrderNew } from 'src/app/+store/order/actions';
 
 @Component({
   selector: 'app-edit',
@@ -12,17 +14,15 @@ import { Subscription } from 'rxjs';
 })
 export class EditComponent implements OnInit, OnDestroy {
   
-  loading:boolean;
+  loading$:Observable<boolean>;
   form:FormGroup;
   orderItem:IOrder;
   orderId:string;
 
-  createSb:Subscription;
-  editSb:Subscription;
-  getSb:Subscription;
+  sb:Subscription;
 
   constructor(private fb:FormBuilder, 
-    private orderService:OrderService, 
+    private store:Store<IAppState>,
     private router:Router,
     private activatedRoute:ActivatedRoute) {
 
@@ -38,7 +38,6 @@ export class EditComponent implements OnInit, OnDestroy {
         phone: ['', [Validators.required]]
       });
 
-      this.settingOrderValues();
 
      }
 
@@ -46,59 +45,41 @@ export class EditComponent implements OnInit, OnDestroy {
       if(!this.orderId)
         return;
 
-      this.loading = true;
+      this.loading$ = this.store.select(getOrderLoading);
 
-      this.getSb = this.orderService.getById(this.orderId)
+
+      this.sb = this.store.select(getOrderListCollection)
         .subscribe(data=> {
  
-          this.orderItem = data;
+          this.orderItem = data.filter(o=> o._id == this.orderId)[0];
+
           this.form.get('nrIntern').setValue(this.orderItem.nrIntern);
           this.form.get('title').setValue(this.orderItem.title);
           this.form.get('status').setValue(this.orderItem.status);
           this.form.get('deliveryDate').setValue(this.orderItem.deliveryDate);
           this.form.get('address').setValue(this.orderItem.address);
           this.form.get('phone').setValue(this.orderItem.phone);
-
-
-          this.loading  = false;
         });
 
      }
 
     ngOnInit() {
-
+      this.settingOrderValues();
     }
 
     ngOnDestroy(): void {
-      if(this.createSb != null)
-        this.createSb.unsubscribe();
-
-      if(this.editSb != null)
-        this.editSb.unsubscribe();
-
-      if(this.getSb != null)
-        this.getSb.unsubscribe();
+      if(this.sb != null)
+        this.sb.unsubscribe();
     }
   
 
     edit(){
-      this.loading = true;
-      this.editSb = this.orderService.edit(this.form.value, this.orderId).subscribe((data)=>{
+      this.store.dispatch(new OrderEdit({id:this.orderId, entity:this.form.value}));
 
-        this.loading = false;
-        this.router.navigate(["/order"]);
-      },
-      err=> {this.loading = false;});
     } 
 
     create(){
-      this.loading = true;
-      this.createSb = this.orderService.create(this.form.value).subscribe((data)=>{
-
-        this.loading = false;
-        this.router.navigate(["/order"]);
-      },
-      err=> {this.loading = false;})
+      this.store.dispatch(new OrderNew({entity:this.form.value}));
     }
 
     back(){

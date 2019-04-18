@@ -2,7 +2,7 @@
   <div><h1 appHighlight highlightColor="yellow">Orders</h1></div>
 
 
-  <table *ngIf="!loading" mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+  <table *ngIf="!(loading$ | async)" mat-table [dataSource]="(dataSource$ | async)" class="mat-elevation-z8" >
       <!-- Position Column -->
       <ng-container matColumnDef="nrIntern">
         <th mat-header-cell *matHeaderCellDef> Number </th>
@@ -43,13 +43,13 @@
       <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
     </table>
 
-    <div *ngIf="!loading" class="newButton">                
+    <div *ngIf="!(loading$ | async)" class="newButton">                
         <button type="button" mat-raised-button color="primary" (click)="newRecord()">New</button>  
     </div>
 
  </div>
 
-  <div class="spinner" align="center" *ngIf="loading" >
+  <div class="spinner" align="center" *ngIf="(loading$ | async)" >
       <mat-spinner></mat-spinner>
   </div>  
   

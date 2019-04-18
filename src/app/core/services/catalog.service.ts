@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import * as MagicStrings from 'src/app/shared/magic-strings';
 
 @Injectable({
-  providedIn: CoreModule
+  providedIn: 'root'
 })
 export class CatalogService extends BaseBO<IArticle> {
  

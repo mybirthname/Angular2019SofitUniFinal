@@ -67,7 +67,8 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sb.unsubscribe();
+    if(this.sb != null)
+      this.sb.unsubscribe();
   }
 
   edit(){

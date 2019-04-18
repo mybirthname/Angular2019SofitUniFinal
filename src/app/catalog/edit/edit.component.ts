@@ -1,30 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IArticle } from '../dto/ICatalog';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogService } from 'src/app/core/services/catalog.service';
+import { Store } from '@ngrx/store';
+import { IAppState, getCatalogListCollection, getCatalogLoading } from 'src/app/+store';
+import { CatalogEdit, CatalogNew } from 'src/app/+store/catalog/actions';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
 
-  loading:boolean;
+  loading$:Observable<boolean>;
   form:FormGroup;
   article:IArticle;
   catalogId:string;
-
-  createSb:Subscription;
-  editSb:Subscription;
-  getSb:Subscription;
+  sb:Subscription;
   
   constructor(private fb:FormBuilder, 
-    private catalogService:CatalogService, 
-    private router:Router,
-    private activatedRoute:ActivatedRoute) {
+    private store:Store<IAppState>,
+    private activatedRoute:ActivatedRoute,
+    private router:Router) {
 
       this.catalogId = this.activatedRoute.snapshot.params["id"];
 
@@ -37,7 +37,7 @@ export class EditComponent implements OnInit {
         category: ['', [Validators.required]]
       });
 
-      this.setArticleValues();
+      this.loading$ = this.store.select(getCatalogLoading);
 
      }
 
@@ -45,59 +45,36 @@ export class EditComponent implements OnInit {
       if(!this.catalogId)
         return;
 
-      this.loading = true;
-
-      this.getSb = this.catalogService.getById(this.catalogId)
-        .subscribe(data=> {
-          console.log(data);
-          this.article = data;
+      this.sb = this.store.select(getCatalogListCollection).subscribe(articleList=> {
+          this.article = articleList.filter(c=> c._id == this.catalogId)[0];;
           this.form.get('nr').setValue(this.article.nr);
           this.form.get('title').setValue(this.article.title);
           this.form.get('pictureUrl').setValue(this.article.pictureUrl);
           this.form.get('description').setValue(this.article.description);
           this.form.get('pricePerPq').setValue(this.article.pricePerPq);
           this.form.get('category').setValue(this.article.category);
-
-
-          this.loading  = false;
         });
+
 
      }
 
     ngOnInit() {
+      this.setArticleValues();
 
     }
 
     ngOnDestroy(): void {
-      if(this.createSb != null)
-        this.createSb.unsubscribe();
-
-      if(this.editSb != null)
-        this.editSb.unsubscribe();
-
-      if(this.getSb != null)
-        this.getSb.unsubscribe();
+      if(this.sb != null)
+        this.sb.unsubscribe();
     }
   
 
     edit(){
-      this.loading = true;
-      this.editSb = this.catalogService.edit(this.form.value, this.catalogId).subscribe((data)=>{
-
-        this.loading = false;
-        this.router.navigate(["/catalog"]);
-      },
-      err=> {this.loading = false;});
+      this.store.dispatch(new CatalogEdit({id:this.catalogId, entity:this.form.value}));
     } 
 
     create(){
-      this.loading = true;
-      this.createSb = this.catalogService.create(this.form.value).subscribe((data)=>{
-
-        this.loading = false;
-        this.router.navigate(["/catalog"]);
-      },
-      err=> {this.loading = false;})
+      this.store.dispatch(new CatalogNew({entity:this.form.value}));
     }
 
     back(){

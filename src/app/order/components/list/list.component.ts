@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { OrderService } from 'src/app/core/services/order.service';
+import { Observable } from 'rxjs';
 import { IOrder } from '../../dto/IOrder';
 import { Router } from '@angular/router';
+import { IAppState, getOrderListCollection, getOrderLoading } from 'src/app/+store';
+import { Store } from '@ngrx/store';
+import { OrderList, OrderDelete } from 'src/app/+store/order/actions';
 
 @Component({
   selector: 'app-list',
@@ -11,35 +13,25 @@ import { Router } from '@angular/router';
 })
 export class ListComponent implements OnInit {
 
-  dataSource:IOrder[];
-  sb:Subscription;
+  dataSource$:Observable<IOrder[]>;
   columnsToDisplay = ['nrIntern', 'title', 'user', 'deliveryDate', '_id'];
-  loading:boolean;
+  loading$:Observable<boolean>;
 
-  constructor(private orderService: OrderService, private router:Router) { 
-    this.loading = true;
-    this.sb = orderService.list().subscribe(data=>{
-      this.dataSource = data;
-      this.loading = false;
-    });
+  constructor(private store:Store<IAppState>, private router:Router) { 
+    store.dispatch(new OrderList(null));
   }
 
   ngOnInit() {
+    this.loading$ = this.store.select(getOrderLoading);
+    this.dataSource$ = this.store.select(getOrderListCollection);
   }
 
   deleteRecord(id:string){
-     this.loading = true;
-     this.sb = this.orderService.delete(id).subscribe(data=>{
-      this.loading = false;
-     },
-     err=>this.loading=false);
+    this.store.dispatch(new OrderDelete({id}));
   }
 
   newRecord(){
     this.router.navigate(["/order/edit"]);
   }
 
-  ngOnDestroy(): void {
-    this.sb.unsubscribe();
-  }
 }

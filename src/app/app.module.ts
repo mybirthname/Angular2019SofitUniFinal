@@ -12,11 +12,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
     AppComponent
   ],
   imports: [
+    CoreModule,
     StoreDevtoolsModule.instrument({}),
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    CoreModule,
     SharedModule
   ],
   providers: [],

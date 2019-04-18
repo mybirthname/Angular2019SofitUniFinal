@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CatalogService } from 'src/app/core/services/catalog.service';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IArticle } from '../dto/ICatalog';
 import { Router } from '@angular/router';
+import { IAppState, getCatalogLoading, getCatalogListCollection } from 'src/app/+store';
+import { Store } from '@ngrx/store';
+import { CatalogList, CatalogDelete } from 'src/app/+store/catalog/actions';
+import { UserDelete } from 'src/app/+store/user/actions';
+
 
 @Component({
   selector: 'app-list',
@@ -11,36 +15,25 @@ import { Router } from '@angular/router';
 })
 export class ListComponent implements OnInit {
 
-  dataSource:IArticle[];
-  sb:Subscription;
+  dataSource$:Observable<IArticle[]>;
   columnsToDisplay = ['nr', 'title', 'pricePerPq', 'category', '_id'];
-  loading:boolean;
+  loading$:Observable<boolean>;
 
-  constructor(private catalogService: CatalogService, private router:Router) { 
-    this.loading = true;
-    this.sb = catalogService.list().subscribe(data=>{
-      this.dataSource = data;
-      this.loading = false;
-    });
+  constructor(private store:Store<IAppState>, private router:Router) { 
+    store.dispatch(new CatalogList(null));
   }
 
   ngOnInit() {
+    this.loading$ = this.store.select(getCatalogLoading);
+    this.dataSource$ = this.store.select(getCatalogListCollection);
   }
 
   deleteRecord(id:string){
-     this.loading = true;
-     this.sb = this.catalogService.delete(id).subscribe(data=>{
-      this.loading = false;
-     },
-     err=>this.loading=false);
+    this.store.dispatch(new CatalogDelete({id}));
   }
 
   newRecord(){
     this.router.navigate(["/catalog/edit"]);
-  }
-
-  ngOnDestroy(): void {
-    this.sb.unsubscribe();
   }
 
 }
