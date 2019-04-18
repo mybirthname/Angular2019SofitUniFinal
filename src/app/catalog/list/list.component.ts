@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { IAppState, getCatalogLoading, getCatalogListCollection } from 'src/app/+store';
 import { Store } from '@ngrx/store';
 import { CatalogList, CatalogDelete } from 'src/app/+store/catalog/actions';
-import { UserDelete } from 'src/app/+store/user/actions';
 
 
 @Component({
@@ -16,7 +15,7 @@ import { UserDelete } from 'src/app/+store/user/actions';
 export class ListComponent implements OnInit {
 
   dataSource$:Observable<IArticle[]>;
-  columnsToDisplay = ['nr', 'title', 'pricePerPq', 'category', '_id'];
+  columnsToDisplay = ['nrIntern', 'title', 'pricePerPq', 'category', '_id'];
   loading$:Observable<boolean>;
 
   constructor(private store:Store<IAppState>, private router:Router) { 

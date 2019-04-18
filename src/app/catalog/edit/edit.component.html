@@ -7,10 +7,10 @@
     <mat-card-content *ngIf="!(loading$ | async)">    
         <form [formGroup]="form">    
             <mat-form-field class="demo-full-width">    
-                <input matInput placeholder="Number" formControlName="nr">   
+                <input matInput placeholder="Number" formControlName="nrIntern">   
                 <mat-error>
-                    <span *ngIf="form.get('nr').touched && form.get('nr').hasError('required')">Required Field</span>
-                    <span *ngIf="form.get('nr').touched && form.get('nr').hasError('minlength')">Min length 6 symbols</span>
+                    <span *ngIf="form.get('nrIntern').touched && form.get('nrIntern').hasError('required')">Required Field</span>
+                    <span *ngIf="form.get('nrIntern').touched && form.get('nrIntern').hasError('minlength')">Min length 6 symbols</span>
                 </mat-error> 
             </mat-form-field>    
 
@@ -36,7 +36,7 @@
                 </mat-error>    
             </mat-form-field>  
             <mat-form-field class="demo-full-width">    
-                <textarea matInput placeholder="Price Per PQ" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="pricePerPq"></textarea> 
+                <input matInput placeholder="Price Per PQ"  formControlName="pricePerPq"> 
                 <mat-error>
                     <span *ngIf="form.get('pricePerPq').touched && form.get('pricePerPq').hasError('required')">Required Field</span>
                 </mat-error>    

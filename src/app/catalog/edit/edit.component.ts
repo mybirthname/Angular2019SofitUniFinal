@@ -29,7 +29,7 @@ export class EditComponent implements OnInit, OnDestroy {
       this.catalogId = this.activatedRoute.snapshot.params["id"];
 
       this.form = this.fb.group({
-        nr: ['', [Validators.required, Validators.minLength(6)]],
+        nrIntern: ['', [Validators.required, Validators.minLength(6)]],
         title: ['', [Validators.required, Validators.minLength(6)]],
         pictureUrl:['',[Validators.required]],
         description: ['', [Validators.required]],
@@ -47,7 +47,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
       this.sb = this.store.select(getCatalogListCollection).subscribe(articleList=> {
           this.article = articleList.filter(c=> c._id == this.catalogId)[0];;
-          this.form.get('nr').setValue(this.article.nr);
+          this.form.get('nrIntern').setValue(this.article.nrIntern);
           this.form.get('title').setValue(this.article.title);
           this.form.get('pictureUrl').setValue(this.article.pictureUrl);
           this.form.get('description').setValue(this.article.description);

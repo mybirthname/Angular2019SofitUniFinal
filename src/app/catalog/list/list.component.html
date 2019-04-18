@@ -3,9 +3,9 @@
 <div align="center"><h1 appHighlight highlightColor="yellow">Catalog</h1></div>
 <table *ngIf="!(loading$ | async)" mat-table [dataSource]="(dataSource$ | async)" class="mat-elevation-z8" align="center">
     <!-- Position Column -->
-    <ng-container matColumnDef="nr">
+    <ng-container matColumnDef="nrIntern">
       <th mat-header-cell *matHeaderCellDef> Number </th>
-      <td mat-cell *matCellDef="let element"> {{element.nr}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.nrIntern}} </td>
     </ng-container>
   
     <!-- Name Column -->

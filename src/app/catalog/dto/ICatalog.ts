@@ -1,6 +1,6 @@
 export interface IArticle{
     _id:string;
-    nr:string;
+    nrIntern:string;
     title:string;
     pictureUrl:string;
     description:string;

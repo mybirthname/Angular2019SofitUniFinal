@@ -21,6 +21,27 @@
                     <span *ngIf="form.get('title').touched && form.get('title').hasError('minlength')">Min length 6 symbols</span>
                 </mat-error>    
             </mat-form-field>
+
+            <mat-form-field class="demo-full-width">    
+                <input matInput placeholder="User" formControlName="user"> 
+                <mat-error>
+                    <span *ngIf="form.get('user').touched && form.get('user').hasError('required')">Required Field</span>
+                </mat-error>    
+            </mat-form-field>
+
+            <mat-form-field class="demo-full-width">    
+                <input matInput placeholder="Category" formControlName="category"> 
+                <mat-error>
+                    <span *ngIf="form.get('category').touched && form.get('category').hasError('required')">Required Field</span>
+                </mat-error>    
+            </mat-form-field>
+
+            <mat-form-field class="demo-full-width">    
+                <textarea matInput placeholder="Description" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description"></textarea> 
+                <mat-error>
+                    <span *ngIf="form.get('description').touched && form.get('description').hasError('required')">Required Field</span>
+                </mat-error>    
+            </mat-form-field>  
             
             <mat-form-field class="demo-full-width">    
                 <input matInput placeholder="Status" formControlName="status"> 
@@ -30,18 +51,19 @@
             </mat-form-field>
 
             <mat-form-field class="demo-full-width">    
-                <textarea matInput placeholder="Address" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="address"></textarea> 
+                <input matInput placeholder="Picture Url" formControlName="pictureUrl"> 
                 <mat-error>
-                    <span *ngIf="form.get('address').touched && form.get('address').hasError('required')">Required Field</span>
+                    <span *ngIf="form.get('pictureUrl').touched && form.get('pictureUrl').hasError('required')">Required Field</span>
                 </mat-error>    
-            </mat-form-field>  
+            </mat-form-field>
+
             <mat-form-field class="demo-full-width">    
-                <textarea matInput placeholder="Phone" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="phone"></textarea> 
+                <input matInput placeholder="Price Per PQ" formControlName="pricePerPq"> 
                 <mat-error>
-                    <span *ngIf="form.get('phone').touched && form.get('phone').hasError('required')">Required Field</span>
+                    <span *ngIf="form.get('pricePerPq').touched && form.get('pricePerPq').hasError('required')">Required Field</span>
                 </mat-error>    
-            </mat-form-field>   
-        
+            </mat-form-field>
+
             <mat-form-field class="demo-full-width">    
                 <input matInput [matDatepicker]="picker" placeholder="Delivery Date" formControlName="deliveryDate">    
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>    

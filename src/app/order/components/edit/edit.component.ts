@@ -34,8 +34,11 @@ export class EditComponent implements OnInit, OnDestroy {
         title: ['', [Validators.required, Validators.minLength(6)]],
         status:['',[Validators.required]],
         deliveryDate: ['', [Validators.required]],
-        address: ['', [Validators.required]],
-        phone: ['', [Validators.required]]
+        pictureUrl: ['', [Validators.required]],
+        description: [''],
+        pricePerPq:['', [Validators.required]],
+        category:['', [Validators.required]],
+        user:['',[Validators.required]]
       });
 
 
@@ -57,8 +60,11 @@ export class EditComponent implements OnInit, OnDestroy {
           this.form.get('title').setValue(this.orderItem.title);
           this.form.get('status').setValue(this.orderItem.status);
           this.form.get('deliveryDate').setValue(this.orderItem.deliveryDate);
-          this.form.get('address').setValue(this.orderItem.address);
-          this.form.get('phone').setValue(this.orderItem.phone);
+          this.form.get('pictureUrl').setValue(this.orderItem.pictureUrl);
+          this.form.get('description').setValue(this.orderItem.description);
+          this.form.get('pricePerPq').setValue(this.orderItem.pricePerPq);
+          this.form.get('category').setValue(this.orderItem.category);
+          this.form.get('user').setValue(this.orderItem.user);
         });
 
      }
