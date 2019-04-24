@@ -32,9 +32,6 @@ export class HeaderComponent implements OnInit {
     this.sidenavToggle.emit();
   }
 
-
-
-
   logOut(){
     this.store.dispatch(new LogOut(null));
      

@@ -1,8 +1,10 @@
 <div align="center">
+    <div><h1 appHighlight highlightColor="yellow">Some text related to home page of the website</h1></div>
+
     <div><h1 appHighlight highlightColor="yellow">My Orders</h1></div>
   
   
-    <table *ngIf="!(loading$ | async) && (dataSource$ | async).length > 0" mat-table [dataSource]="(dataSource$ | async)" class="mat-elevation-z8" >
+    <table *ngIf="!(loading$ | async) && dataSource$ | async as orders" mat-table [dataSource]="orders" class="mat-elevation-z8" >
         <!-- Position Column -->
         <ng-container matColumnDef="nrIntern">
           <th mat-header-cell *matHeaderCellDef> Number </th>
