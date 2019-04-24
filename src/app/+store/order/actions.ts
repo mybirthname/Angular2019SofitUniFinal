@@ -15,7 +15,11 @@ export const ActionTypes = {
 
     OrderNew: '[ORDER] New',
     OrderNewSuccess: '[ORDER] New Success',
-    OrderNewFailed: '[ORDER] New Failed'
+    OrderNewFailed: '[ORDER] New Failed',
+
+    OrderOwn: '[ORDER] Own',
+    OrderOwnSuccess: '[ORDER] Own Success',
+    OrderOwnFailed: '[ORDER] Own Failed',
 
 }
 
@@ -75,6 +79,30 @@ export class OrderDelete implements IAction<{id:string}>{
     }
 }
 
+export class OrderOwn implements IAction<{entity:any}>{
+    type=ActionTypes.OrderOwn;
+
+    constructor(public payload:any){
+
+    }
+}
+
+export class OrderOwnSuccess implements IAction<any>{
+    type=ActionTypes.OrderOwnSuccess;
+
+    constructor(public payload:any){
+
+    }
+
+}
+export class OrderOwnFailed implements IAction<any>{
+    type=ActionTypes.OrderOwnFailed;
+
+    constructor(public payload:any){
+
+    }
+}
+
 export class OrderListSuccess implements IAction<any>{
     type=ActionTypes.OrderListSuccess;
 
@@ -124,4 +152,7 @@ OrderEditFailed|
 OrderEditSuccess|
 OrderNew|
 OrderNewFailed|
-OrderNewSuccess;
+OrderNewSuccess|
+OrderOwn|
+OrderOwnFailed|
+OrderOwnSuccess;

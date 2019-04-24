@@ -30,9 +30,9 @@
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
             <a routerLink="edit/{{element._id}}" >
-              <mat-icon class="icon">edit</mat-icon>
+              <mat-icon class="icon">visibility</mat-icon>
             </a>
-            <a [routerLink]="[]" (click)="deleteRecord(element._id)">
+            <a *ngIf="(isAdmin$ | async)" [routerLink]="[]" (click)="deleteRecord(element._id)">
                 <mat-icon class="icon">delete</mat-icon>
             </a>
         </td>
@@ -42,7 +42,7 @@
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
   </table>
 
-  <div *ngIf="!(loading$ | async)" class="newButton">                
+  <div *ngIf="!(loading$ | async) && (isAdmin$ | async)" class="newButton">                
       <button type="button" mat-raised-button color="primary" (click)="newRecord()">New</button>  
   </div>
 </div>

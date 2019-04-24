@@ -4,3 +4,4 @@ import { IState as IUserState } from './reducer';
 //do the same stuff here !
 export const getUserList = (state:IUserState) => state.userCollection;
 export const getIsLoading = (state:IUserState) => state.isLoading;
+export const getCurrentUser = (state:IUserState)=> state.currentUser;

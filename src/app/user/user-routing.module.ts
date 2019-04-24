@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import {EditComponent} from './components/edit/edit.component';
 import { SuperAdminGuard } from '../core/services/super-admin.guard';
 import { AuthGuard } from '../core/services/auth.guard';
+import { AccountComponent } from './components/account/account.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
     path:'edit/:id',
     component: EditComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path:'account/:id',
+    component: AccountComponent
   }
 ];
 

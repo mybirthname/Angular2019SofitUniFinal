@@ -1,0 +1,27 @@
+table{
+    margin-top: 50px;
+}
+
+
+
+.mat-header-row {
+    width: 100%;
+}
+
+.mat-row {
+    width: 100%;
+}
+
+.mat-cell{
+    min-width: 300px;
+}
+
+.spinner{
+    margin-top:250px;
+}
+
+.newButton{
+    padding-top: 35px;
+    float:right;
+    margin-right:200px;
+}

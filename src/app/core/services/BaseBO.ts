@@ -28,6 +28,11 @@ export abstract class BaseBO<T> implements IBaseBO<T>{
             .put<T>(this.additionalUrl + `/${id}`, entity, {params:this.httpParams.edit});
 
     }
+
+    getByCreator(id:string):Observable<T[]>{
+        return this.httpClient
+            .get<T[]>(this.additionalUrl + `/?query={"_acl.creator":"${id}"}`, {params:this.httpParams.list});
+    }
     
     delete(id:string): Observable<T> {
         if(this.httpParams.delete == null)

@@ -10,8 +10,12 @@ export const ActionTypes = {
     UserDeleteFailed: '[USER] Delete Failed',
 
     UserList: '[USER] List',
-    UserListSuccess: '[User] List Success',
-    UserListFailed: '[User] List Failed'
+    UserListSuccess: '[USER] List Success',
+    UserListFailed: '[USER] List Failed',
+
+    UserAccount: '[USER] Account',
+    UserAccountSuccess: '[USER] Account Success',
+    UserAccountFailed: '[USER] Account Failed'
 
 }
 
@@ -36,6 +40,29 @@ export class UserListFailed implements IAction<any>{
 
     constructor(public payload:any){
         
+    }
+}
+
+export class UserAccount implements IAction<{id:string}>{
+    type=ActionTypes.UserAccount;
+
+    constructor(public payload: {id:string}){
+
+    }
+}
+
+export class UserAccountFailed implements IAction<any>{
+    type = ActionTypes.UserAccountFailed;
+    constructor(public payload: any){
+
+    }
+}
+
+export class UserAccountSuccess implements IAction<any>{
+    type=ActionTypes.UserAccountSuccess;
+
+    constructor(public payload: any){
+
     }
 }
 
@@ -95,4 +122,7 @@ export type UserActions = UserDeleteFailed|
     UserEdit|
     UserList|
     UserListFailed|
-    UserListSuccess;
+    UserListSuccess|
+    UserAccount|
+    UserAccountFailed|
+    UserAccountSuccess;

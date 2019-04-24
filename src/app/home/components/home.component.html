@@ -1,32 +1,45 @@
-<p>
-  home works!
-</p>
-<p>
-    home works!
-  </p><p>
-      home works!
-    </p><p>
-        home works!
-      </p><p>
-          home works!
-        </p><p>
-            home works!
-          </p><p>
-              home works!
-            </p><p>
-                home works!
-              </p><p>
-                  home works!
-                </p><p>
-                    home works!
-                  </p><p>
-                      home works!
-                    </p><p>
-                        home works!
-                      </p><p>
-                          home works!
-                        </p><p>
-                            home works!
-                          </p><p>
-                              home works!
-                            </p>
+<div align="center">
+    <div><h1 appHighlight highlightColor="yellow">My Orders</h1></div>
+  
+  
+    <table *ngIf="!(loading$ | async) && (dataSource$ | async).length > 0" mat-table [dataSource]="(dataSource$ | async)" class="mat-elevation-z8" >
+        <!-- Position Column -->
+        <ng-container matColumnDef="nrIntern">
+          <th mat-header-cell *matHeaderCellDef> Number </th>
+          <td mat-cell *matCellDef="let element"> {{element.nrIntern}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef> Title </th>
+          <td mat-cell *matCellDef="let element"> {{element.title | maxSymbols: 25}} </td>
+      </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef> User </th>
+          <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="deliveryDate">
+          <th mat-header-cell *matHeaderCellDef> Delivery Date  </th>
+          <td mat-cell *matCellDef="let element"> {{element.deliveryDate | date}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status  </th>
+            <td mat-cell *matCellDef="let element"> {{element.status }} </td>
+          </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+      </table>
+  
+  
+   </div>
+  
+    <div class="spinner" align="center" *ngIf="(loading$ | async)" >
+        <mat-spinner></mat-spinner>
+    </div>  
+    

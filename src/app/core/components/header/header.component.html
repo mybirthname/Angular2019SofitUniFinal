@@ -4,12 +4,13 @@
        <mat-icon>menu</mat-icon>
      </button>
    </div>
-    <div class="logo">
-      <a routerLink="/home">
-         Project SPA
-      </a>
-    </div>
-    <div fxFlex fxLayout   fxHide.xs>
+
+    <div fxFlex fxLayout   fxHide.xs class="header-container">
+         <div fxFlex fxLayout  class="main-nav"><div class="logo">
+               <a routerLink="/home">
+                  Project SPA
+               </a>
+            </div>
        <ul fxLayout fxLayoutGap="25px" class="navigation-items">
            <li>
               <a routerLink="/home">
@@ -17,7 +18,7 @@
                 <span class="label">Home</span>
               </a>
            </li>
-           <li *ngIf="(isLogged$ | async)">
+           <li *ngIf="true"><!--  (isLogged$ | async) -->
                <a routerLink="/catalog" >
                    <mat-icon class="icon">speaker_notes</mat-icon>
                    <span class="label">Catalog</span>
@@ -54,16 +55,13 @@
                  <span class="label">Log Out</span>
                 </a>
            </li>
-           <ul *ngIf="(isLogged$ | async)" class="user-name">
-               <li >
-                  {{(userName$| async)}}
-               </li>
-            </ul>
+
        </ul>
-
-       <div>
-
-         
        </div>
+       <ul *ngIf="(isLogged$ | async)" class="user-name">
+         <li >
+            <a routerLink="/user/account/{{userId$|async}}">{{(userName$| async)}}</a>
+         </li>
+      </ul>
     </div>
    </mat-toolbar>

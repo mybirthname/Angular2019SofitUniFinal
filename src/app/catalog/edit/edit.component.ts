@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IArticle } from '../dto/ICatalog';
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CatalogService } from 'src/app/core/services/catalog.service';
 import { Store } from '@ngrx/store';
-import { IAppState, getCatalogListCollection, getCatalogLoading } from 'src/app/+store';
+import { IAppState, getCatalogListCollection, getCatalogLoading, getIsSuperAdmin, getIsAuthenticated, getAuthUserId } from 'src/app/+store';
 import { CatalogEdit, CatalogNew } from 'src/app/+store/catalog/actions';
+import { OrderNew } from 'src/app/+store/order/actions';
+import { IOrder } from 'src/app/order/dto/IOrder';
 
 @Component({
   selector: 'app-edit',
@@ -19,7 +20,12 @@ export class EditComponent implements OnInit, OnDestroy {
   form:FormGroup;
   article:IArticle;
   catalogId:string;
-  sb:Subscription;
+  articleSb:Subscription;
+  superAdminSb:Subscription;
+  isAdmin: boolean;
+  isAuth$:Observable<boolean>;
+  orderEntity: IOrder;
+  userId:string;
   
   constructor(private fb:FormBuilder, 
     private store:Store<IAppState>,
@@ -27,6 +33,7 @@ export class EditComponent implements OnInit, OnDestroy {
     private router:Router) {
 
       this.catalogId = this.activatedRoute.snapshot.params["id"];
+      this.store.select(getAuthUserId).subscribe(user=> this.userId = user);
 
       this.form = this.fb.group({
         nrIntern: ['', [Validators.required, Validators.minLength(6)]],
@@ -38,15 +45,15 @@ export class EditComponent implements OnInit, OnDestroy {
       });
 
       this.loading$ = this.store.select(getCatalogLoading);
-
+      this.isAuth$ = this.store.select(getIsAuthenticated);
      }
 
      setArticleValues(){
       if(!this.catalogId)
         return;
 
-      this.sb = this.store.select(getCatalogListCollection).subscribe(articleList=> {
-          this.article = articleList.filter(c=> c._id == this.catalogId)[0];;
+      this.articleSb = this.store.select(getCatalogListCollection).subscribe(articleList=> {
+          this.article = articleList.filter(c=> c._id == this.catalogId)[0];
           this.form.get('nrIntern').setValue(this.article.nrIntern);
           this.form.get('title').setValue(this.article.title);
           this.form.get('pictureUrl').setValue(this.article.pictureUrl);
@@ -55,6 +62,14 @@ export class EditComponent implements OnInit, OnDestroy {
           this.form.get('category').setValue(this.article.category);
         });
 
+      this.superAdminSb = this.store.select(getIsSuperAdmin).subscribe(isAdmin=>{
+        if(!isAdmin)
+          this.form.disable();
+
+        this.isAdmin = isAdmin;
+        
+      })
+      
 
      }
 
@@ -64,8 +79,11 @@ export class EditComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-      if(this.sb != null)
-        this.sb.unsubscribe();
+      if(this.articleSb != null)
+        this.articleSb.unsubscribe();
+
+      if(this.superAdminSb !=null)
+        this.superAdminSb.unsubscribe();
     }
   
 
@@ -75,6 +93,13 @@ export class EditComponent implements OnInit, OnDestroy {
 
     create(){
       this.store.dispatch(new CatalogNew({entity:this.form.value}));
+    }
+
+    order(){
+      this.orderEntity = this.form.value;
+      this.orderEntity.status = 'Created';
+
+      this.store.dispatch(new OrderNew({entity:this.form.value}));
     }
 
     back(){

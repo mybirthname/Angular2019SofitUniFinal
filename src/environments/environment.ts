@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'https://baas.kinvey.com',
   appKey: 'kid_BynF5IwYN',
+  masterSecret: 'c1fac0518e364be3a1ec33bf6dc14f31',
   appSecret: 'c71430a924e94d64bde3f3111e47ab0a'
 };
 

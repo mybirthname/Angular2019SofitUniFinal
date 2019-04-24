@@ -44,6 +44,7 @@ export const getUserStore = createFeatureSelector('user');
 
 export const getUserListColl = createSelector(getUserStore, user.getUserList);
 export const getUserLoading = createSelector(getUserStore, user.getIsLoading);
+export const getCurrentUserColllection = createSelector(getUserStore, user.getCurrentUser);
 
 //#endregion
 
@@ -53,6 +54,7 @@ export const getOrderStore = createFeatureSelector('order');
 
 export const getOrderListCollection = createSelector(getOrderStore, order.getOrderList);
 export const getOrderLoading = createSelector(getOrderStore, order.getIsLoading);
+export const getOrderOwnCollection = createSelector(getOrderStore, order.getOrderOwn);
 
 //#endregion
 

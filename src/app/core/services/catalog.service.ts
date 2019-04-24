@@ -17,7 +17,7 @@ export class CatalogService extends BaseBO<IArticle> {
     this.additionalUrl = `appdata/${environment.appKey}/Catalog`;
 
     this.httpParams = {
-      list:new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.KinveyAuthenticationType),
+      list:new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.BasicMasterAuthenticationType),
       create:new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.KinveyAuthenticationType),
       delete:new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.KinveyAuthenticationType),
       edit: new HttpParams().set(MagicStrings.AuthenticationTypeName, MagicStrings.KinveyAuthenticationType)

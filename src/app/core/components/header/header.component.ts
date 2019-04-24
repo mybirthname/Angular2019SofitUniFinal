@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { IAppState, getIsAuthenticated, getIsSuperAdmin, getAuthUserName } from 'src/app/+store';
+import { IAppState, getIsAuthenticated, getIsSuperAdmin, getAuthUserName, getAuthUserId } from 'src/app/+store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { LogOut } from 'src/app/+store/auth/actions';
@@ -16,11 +16,13 @@ export class HeaderComponent implements OnInit {
   isLogged$: Observable<boolean>
   isSuperAdmin$:Observable<boolean>
   userName$: Observable<string>
+  userId$: Observable<string>;
   
   constructor(private store:Store<IAppState>) { 
     this.isLogged$ = store.select(getIsAuthenticated);
     this.isSuperAdmin$ = store.select(getIsSuperAdmin);
     this.userName$ = store.select(getAuthUserName);
+    this.userId$ = store.select(getAuthUserId);
   }
 
   ngOnInit() {

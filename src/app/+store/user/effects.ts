@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import { UserService } from 'src/app/core/services/user.service';
 import { Router } from '@angular/router';
-import { UserEdit, ActionTypes, UserEditSuccess, UserList, UserListSuccess, UserDelete, UserDeleteSuccess, UserDeleteFailed, UserListFailed, UserEditFailed } from './actions';
+import { UserEdit, ActionTypes, UserEditSuccess, UserList, UserListSuccess, UserDelete, UserDeleteSuccess, UserDeleteFailed, UserListFailed, UserEditFailed, UserAccount, UserAccountSuccess } from './actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -59,5 +59,17 @@ export class UserEffects{
         
     
     );
+
+    @Effect() userAccount$ = this.actions$.pipe(ofType<UserAccount>(ActionTypes.UserAccount),
+        map(action=>action.payload),
+        switchMap((data)=>{
+            return this.userService.getById(data.id).pipe(
+                map(result=>{
+                    return new UserAccountSuccess(result);
+                })
+            )
+        })
+    )
+
     
 }

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { OrderService } from 'src/app/core/services/order.service';
-import { OrderList, ActionTypes, OrderListSuccess, OrderListFailed, OrderDelete, OrderDeleteSuccess, OrderDeleteFailed, OrderEdit, OrderEditSuccess, OrderEditFailed, OrderNew, OrderNewSuccess, OrderNewFailed } from './actions';
+import { OrderList, ActionTypes, OrderListSuccess, OrderListFailed, OrderDelete, OrderDeleteSuccess, OrderDeleteFailed, OrderEdit, OrderEditSuccess, OrderEditFailed, OrderNew, OrderNewSuccess, OrderNewFailed, OrderOwn, OrderOwnSuccess } from './actions';
 
 @Injectable({
     providedIn:'root'
@@ -64,7 +64,7 @@ export class OrderEffects{
                     return new OrderNewSuccess(result);
                 }),
                 tap(x=>{
-                    this.router.navigate(["/order"]);
+                    this.router.navigate(["/home"]);
                 }),
                 catchError(((err)=> [new OrderNewFailed({error: err})]))
             )
@@ -72,4 +72,18 @@ export class OrderEffects{
     
     
     );
+
+    @Effect() orderOwn$ = this.actions$.pipe(ofType<OrderOwn>(ActionTypes.OrderOwn),
+        map(action=> action.payload),
+        switchMap((data)=>{
+            console.log(data);
+            return this.orderService.getByCreator(data).pipe(
+                map(result=>{
+                    
+                    return new OrderOwnSuccess(result);
+                })
+            )
+        })
+    
+    )
 }

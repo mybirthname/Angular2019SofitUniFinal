@@ -1,7 +1,7 @@
 <mat-card class=".mat-card">    
     <!-- Title of an Card -->    
     <mat-card-title appHighlight highlightColor="yellow">    
-        Order  
+        Article  
     </mat-card-title>    
     
     <mat-card-content *ngIf="!(loading$ | async)">    
@@ -52,8 +52,9 @@
         
        
             <div class="content-center">    
-                <button type="button" *ngIf="catalogId!=null" mat-raised-button color="primary" [disabled]="form.invalid" (click)="edit()">Edit</button> 
+                <button type="button" *ngIf="catalogId!=null && isAdmin" mat-raised-button color="primary" [disabled]="form.invalid" (click)="edit()">Edit</button> 
                 <button type="button" *ngIf="catalogId == null" mat-raised-button color="primary" [disabled]="form.invalid" (click)="create()">Create</button> 
+                <button type="button" *ngIf="(isAuth$ | async)" mat-raised-button color="primary" [disabled]="form.invalid" (click)="order()">Order</button> 
 
                 <button type="button" mat-raised-button color="primary" (click)="back()">Back</button>  
             </div>    

@@ -5,13 +5,15 @@ import { ActionTypes } from './actions';
 export interface IState{
     isLoading:boolean;
     orderCollection:IOrder[];
+    orderOwnCollection:IOrder[]
     errorMessage:string;
 }
 
 const defaultState: IState ={
     isLoading:false,
     orderCollection:[],
-    errorMessage: null
+    errorMessage: null,
+    orderOwnCollection:[]
 }
 
 export function reducer(state=defaultState, action:OrderActions){
@@ -66,6 +68,19 @@ export function reducer(state=defaultState, action:OrderActions){
 
             return {...state, isLoading:false };
         }
+        case ActionTypes.OrderOwn:{
+            
+            return { ...state, isLoading: true };
+        }
+        case ActionTypes.OrderOwnFailed:{
+            return {...state, isLoading: false};
+        }
+        case ActionTypes.OrderOwnSuccess:{
+            const coll = action.payload as IOrder[];
+
+            return {...state, isLoading: false, orderOwnCollection:coll};
+        }
+
     }
 
     return state;

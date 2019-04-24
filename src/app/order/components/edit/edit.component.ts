@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IOrder } from '../../dto/IOrder';
 import { Subscription, Observable } from 'rxjs';
-import { IAppState, getOrderLoading, getOrderListCollection } from 'src/app/+store';
+import { IAppState, getOrderLoading, getOrderListCollection, getAuthUserId } from 'src/app/+store';
 import { Store } from '@ngrx/store';
 import { OrderEdit, OrderNew } from 'src/app/+store/order/actions';
 
@@ -18,8 +18,10 @@ export class EditComponent implements OnInit, OnDestroy {
   form:FormGroup;
   orderItem:IOrder;
   orderId:string;
-
+  orderEntity:IOrder;
+  userId:string;
   sb:Subscription;
+  showCloseBtn:boolean;
 
   constructor(private fb:FormBuilder, 
     private store:Store<IAppState>,
@@ -37,8 +39,7 @@ export class EditComponent implements OnInit, OnDestroy {
         pictureUrl: ['', [Validators.required]],
         description: [''],
         pricePerPq:['', [Validators.required]],
-        category:['', [Validators.required]],
-        user:['',[Validators.required]]
+        category:['', [Validators.required]]
       });
 
 
@@ -64,7 +65,10 @@ export class EditComponent implements OnInit, OnDestroy {
           this.form.get('description').setValue(this.orderItem.description);
           this.form.get('pricePerPq').setValue(this.orderItem.pricePerPq);
           this.form.get('category').setValue(this.orderItem.category);
-          this.form.get('user').setValue(this.orderItem.user);
+
+          this.form.get('status').disable();
+          this.showCloseBtn = this.orderItem.status != "Finish";
+
         });
 
      }
@@ -81,11 +85,13 @@ export class EditComponent implements OnInit, OnDestroy {
 
     edit(){
       this.store.dispatch(new OrderEdit({id:this.orderId, entity:this.form.value}));
-
     } 
 
-    create(){
-      this.store.dispatch(new OrderNew({entity:this.form.value}));
+    close(){
+      this.orderEntity = this.form.value;
+      this.orderEntity.status = "Finish";
+
+      this.store.dispatch(new OrderEdit({id:this.orderId, entity:this.orderEntity}));
     }
 
     back(){

@@ -4,3 +4,4 @@ import { IState as IOrderState } from './reducer';
 //do the same stuff here !
 export const getOrderList = (state:IOrderState) => state.orderCollection;
 export const getIsLoading = (state:IOrderState) => state.isLoading;
+export const getOrderOwn = (state:IOrderState) => state.orderOwnCollection;

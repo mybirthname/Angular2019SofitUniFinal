@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IArticle } from '../dto/ICatalog';
 import { Router } from '@angular/router';
-import { IAppState, getCatalogLoading, getCatalogListCollection } from 'src/app/+store';
+import { IAppState, getCatalogLoading, getCatalogListCollection, getIsSuperAdmin } from 'src/app/+store';
 import { Store } from '@ngrx/store';
 import { CatalogList, CatalogDelete } from 'src/app/+store/catalog/actions';
+
 
 
 @Component({
@@ -17,6 +18,7 @@ export class ListComponent implements OnInit {
   dataSource$:Observable<IArticle[]>;
   columnsToDisplay = ['nrIntern', 'title', 'pricePerPq', 'category', '_id'];
   loading$:Observable<boolean>;
+  isAdmin$:Observable<boolean>;
 
   constructor(private store:Store<IAppState>, private router:Router) { 
     store.dispatch(new CatalogList(null));
@@ -24,6 +26,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.loading$ = this.store.select(getCatalogLoading);
+    this.isAdmin$ = this.store.select(getIsSuperAdmin);
     this.dataSource$ = this.store.select(getCatalogListCollection);
   }
 

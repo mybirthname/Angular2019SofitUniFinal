@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { CustomPreloader } from './core/services/custom-preloader';
 import { SuperAdminGuard } from './core/services/super-admin.guard';
+import { AuthGuard } from './core/services/auth.guard';
 
 
 const routes: Routes = [
@@ -17,8 +18,7 @@ const routes: Routes = [
   },
   {
     path:'cart',
-    loadChildren: './cart/cart.module#CartModule',
-    data: { preload: true }
+    loadChildren: './cart/cart.module#CartModule'
   },
   {
     path:'order',
@@ -32,7 +32,8 @@ const routes: Routes = [
   {
     path:'catalog',
     loadChildren:'./catalog/catalog.module#CatalogModule',
-    canLoad: [SuperAdminGuard]
+    data: { preload: true }
+    // canLoad: [AuthGuard]
   },
   {
     path:"**",

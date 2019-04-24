@@ -7,6 +7,6 @@ export interface IOrder{
     deliveryDate:Date;
     pricePerPq:number;
     category:string;
-    user:string;
+    userId:string;
     status:string;
 }

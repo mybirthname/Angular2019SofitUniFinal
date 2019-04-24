@@ -29,7 +29,7 @@ export class AppHttpInterceptor implements HttpInterceptor{
                     params: req.params.delete('AuthenticationType'),
                     headers: headers
                 });    
-        
+
                 return next.handle(cloneRequest);
             }))
 

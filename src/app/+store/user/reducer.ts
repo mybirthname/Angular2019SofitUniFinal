@@ -7,13 +7,15 @@ export interface IState{
     isLoading:boolean;
     userCollection:IUser[];
     errorMessage:string;
+    currentUser:IUser;
 }
 
 const defaultState:IState={
 
     isLoading:false,
     userCollection:[],
-    errorMessage:null
+    errorMessage:null,
+    currentUser: null
 }
 
 export function reducer(state=defaultState, action:UserActions):IState{
@@ -56,6 +58,19 @@ export function reducer(state=defaultState, action:UserActions):IState{
             return {...state, isLoading:false };
 
         }
+        case ActionTypes.UserAccount:{
+            return { ...state, isLoading:true };
+        }
+        case ActionTypes.UserAccountFailed:{
+
+            return { ...state, isLoading:false };
+        }
+        case ActionTypes.UserAccountSuccess:{
+            const user = action.payload as IUser;
+
+            return { ...state, currentUser: user, isLoading:false };
+        }        
+
 
     }
 
