@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   dataSource$:Observable<IOrder[]>;
-  columnsToDisplay = ['nrIntern', 'title', 'user', 'status', 'deliveryDate'];
+  columnsToDisplay = ['nrIntern', 'title', 'status', 'deliveryDate'];
   loading$:Observable<boolean>;
 
   ngOnInit() {

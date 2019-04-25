@@ -14,7 +14,7 @@ import { OrderList, OrderDelete } from 'src/app/+store/order/actions';
 export class ListComponent implements OnInit {
 
   dataSource$:Observable<IOrder[]>;
-  columnsToDisplay = ['nrIntern', 'title', 'user', 'status', 'deliveryDate', '_id'];
+  columnsToDisplay = ['nrIntern', 'title', 'status', 'deliveryDate', '_id'];
   loading$:Observable<boolean>;
 
   constructor(private store:Store<IAppState>, private router:Router) { 
